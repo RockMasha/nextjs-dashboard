@@ -1,4 +1,22 @@
 import SideNav from "@/app/ui/dashboard/sidenav";
+import { Metadata, ResolvingMetadata } from "next";
+
+export async function generateMetadata(
+  _props: any,
+  parent: ResolvingMetadata
+): Promise<Metadata> {
+  const parentMetadata = await parent;
+  const defaultTitle = `Dashboard | ${parentMetadata?.title?.absolute}`;
+  console.log("defaultTitle", defaultTitle);
+
+  return {
+    title: {
+      template: `%s | ${defaultTitle}`,
+      default: defaultTitle,
+    },
+    description: parentMetadata.description,
+  };
+}
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
